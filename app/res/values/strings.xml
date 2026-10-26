@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Power11</string>
+    <string name="description">Power menu items, order, grid and reboot entries for the Power11 KernelSU module. Scope: System UI.</string>
+
+    <string-array name="xposed_scope">
+        <item>com.android.systemui</item>
+    </string-array>
+</resources>
