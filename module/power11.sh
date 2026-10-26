@@ -5,7 +5,7 @@
 #    On HyperOS/MIUI the plugin APK (miui.systemui.plugin) registers a service
 #    for the GlobalActions plugin action. Disabling it makes SystemUI fall
 #    back to its built-in AOSP GlobalActionsDialogLite.
-# 2. Items, order, grid: the Power11 LSPosed/Vector module (system/app)
+# 2. Items, order, grid: the Power11 LSPosed/Vector module (Power11.apk)
 #    hooks SystemUI and reads Settings.Global power11_items/power11_columns
 #    every time the menu opens.
 # 3. Reboot entries: the hook drops power11_<cmd> files in SystemUI's data
@@ -98,7 +98,22 @@ find_targets() {
   done | grep -v '^com\.android\.systemui/' | sort -u
 }
 
+# Power menu components disabled earlier (e.g. by AOSP Power Menu v1/v2) are
+# invisible to query-services: take them over so status and uninstall see them
+adopt_disabled() {
+  for pkg in $(plugin_packages); do
+    dumpsys package "$pkg" 2>/dev/null \
+      | awk '/disabledComponents:/ {f=1; next} f && /^ *[A-Za-z0-9_.$]+$/ {print $1; next} {f=0}' \
+      | grep -iE 'globalaction|powermenu' \
+      | while read -r cls; do
+          c="$pkg/$cls"
+          grep -qx "$c" "$STATE" || { echo "$c" >> "$STATE"; log "Adopted $c"; }
+        done
+  done
+}
+
 disable_plugin() {
+  adopt_disabled
   changed=0
   for c in $(find_targets); do
     if pm disable "$c" >/dev/null 2>&1; then
@@ -150,6 +165,23 @@ apply_blur_props() {
 }
 
 # ------------------------------------------------------------------ hook
+
+# Vector/LSPosed only lists modules installed as regular apps
+install_app() {
+  want=$(grep '^versionCode=' "$MODDIR/module.prop" | cut -d= -f2)
+  have=$(dumpsys package "$APP_PKG" 2>/dev/null | grep -m 1 -o 'versionCode=[0-9]*' | cut -d= -f2)
+  [ "$have" = "$want" ] && return 0
+  # system_server may not read module files directly
+  tmp=/data/local/tmp/power11.apk
+  cp -f "$MODDIR/Power11.apk" "$tmp" && chmod 644 "$tmp" \
+    || { log "ERROR: cannot stage the Power11 app"; return 1; }
+  if out=$(pm install -r -d "$tmp" 2>&1); then
+    log "Installed Power11 app ($want)"
+  else
+    log "ERROR: could not install the Power11 app: $out"
+  fi
+  rm -f "$tmp"
+}
 
 # The hook writes SystemUI's pid on start; a match means it is loaded now
 hook_active() {
@@ -206,6 +238,7 @@ turn_off() {
 boot() {
   [ "$(get_cfg blur 0)" = "1" ] && settings put global disable_window_blurs 0
   push_settings
+  install_app
   start_watcher
   if [ "$(get_cfg enabled 1)" = "1" ]; then
     # Re-applied every boot: after an OTA the plugin may be back
@@ -292,6 +325,7 @@ case "$1" in
     apply_blur_radius ;;
   blur_props) [ "$(get_cfg blur 0)" = "1" ] && apply_blur_props ;;
   boot_state) printf 'blur=%s\n' "$(get_cfg blur 0)" > "$BOOTSTATE" ;;
+  install_app) install_app ;;
   boot)    boot ;;
   status)  status ;;
   scan)    scan ;;

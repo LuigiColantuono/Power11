@@ -1,4 +1,4 @@
-"""Build the Power11 LSPosed/Vector module APK into module/system/app/Power11/.
+"""Build the Power11 LSPosed/Vector module APK into module/Power11.apk.
 
 Needs a JDK in PATH and the Android SDK (build-tools + a platform android.jar).
 The SDK is found through ANDROID_HOME / ANDROID_SDK_ROOT or --sdk <path>.
@@ -17,7 +17,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 APP = os.path.join(ROOT, "app")
 STUBS = os.path.join(ROOT, "stubs")
 BUILD = os.path.join(ROOT, "build")
-OUT = os.path.join(ROOT, "module", "system", "app", "Power11", "Power11.apk")
+OUT = os.path.join(ROOT, "module", "Power11.apk")
 KEYSTORE = os.path.join(ROOT, "tools", "power11.keystore")
 STOREPASS = "aosppowermenu"
 ALIAS = "aosppowermenu"

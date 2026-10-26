@@ -39,7 +39,7 @@ automatically.
 | Part | What it does |
 |---|---|
 | `power11.sh` | Disables the `miui.systemui.plugin` service bound to `PLUGIN_GLOBAL_ACTIONS`, so SystemUI falls back to its AOSP `GlobalActionsDialogLite` |
-| Power11 APK (`system/app`) | Vector hook in SystemUI: sets the item list and order, grid columns, and adds the reboot entries. Reads `Settings.Global power11_items` / `power11_columns` on every menu open |
+| Power11 APK (installed as a regular app) | Vector hook in SystemUI: sets the item list and order, grid columns, and adds the reboot entries. Reads `Settings.Global power11_items` / `power11_columns` on every menu open |
 | `watcher.sh` | SystemUI may not reboot to recovery/bootloader. The hook creates `power11_<cmd>` in SystemUI's data dir and this root process (busybox `inotifyd`, no polling) runs it |
 
 ## Command line

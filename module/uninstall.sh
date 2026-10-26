@@ -11,6 +11,7 @@ nohup sh -c '
     done < "$STATE"
   fi
   cmd overlay disable com.android.shell:power11_blur >/dev/null 2>&1
+  pm uninstall com.luigicolantuono.power11 >/dev/null 2>&1
   settings delete global power11_items >/dev/null 2>&1
   settings delete global power11_columns >/dev/null 2>&1
   rm -f /data/user_de/0/com.android.systemui/power11_*

@@ -1,7 +1,7 @@
 id=power11
 name=Power11
-version=v3.0.0
-versionCode=300
+version=v3.0.1
+versionCode=301
 author=Luigi Colantuono
 description=Bring back the old gem from Android 11. The classic AOSP power menu on HyperOS, with custom items, reboot entries and blur.
 banner=banner.png

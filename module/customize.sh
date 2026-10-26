@@ -45,10 +45,15 @@ for f in power11.sh post-fs-data.sh service.sh action.sh uninstall.sh watcher.sh
   set_perm "$MODPATH/$f" 0 0 0755
 done
 
+ui_print "- Installing the Power11 Vector module app"
+sh "$MODPATH/power11.sh" install_app
+pm path com.luigicolantuono.power11 >/dev/null 2>&1 \
+  && ui_print "  done" || ui_print "! failed, will retry at boot"
+
 ui_print " "
-ui_print "- After reboot:"
-ui_print "  1. Open Vector/LSPosed, enable Power11"
-ui_print "     with scope System UI"
-ui_print "  2. Restart SystemUI from the Power11 WebUI"
+ui_print "- Next:"
+ui_print "  1. Vector > Modules > Power11: enable,"
+ui_print "     scope System UI"
+ui_print "  2. Reboot (or Restart SystemUI in the WebUI)"
 ui_print "  3. Pick items and order in the WebUI"
 ui_print " "
