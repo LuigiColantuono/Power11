@@ -3,3 +3,4 @@ __pycache__/
 .claude/
 build/
 tools/*.keystore
+release-notes-*.md

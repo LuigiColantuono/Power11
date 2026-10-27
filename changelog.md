@@ -1,5 +1,9 @@
 # Changelog
 
+## v3.0.2
+- Ready for KernelSU Modules (modules.kernelsu.org)
+- MIT license
+
 ## v3.0.1
 - The Power11 app is now installed as a regular app, so Vector/LSPosed lists it
 - Plugin components disabled by AOSP Power Menu v1/v2 are taken over correctly

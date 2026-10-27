@@ -1,0 +1,15 @@
+schemaVersion: 1
+id: power11
+name: Power11
+summary: Bring back the old gem from Android 11. The classic AOSP power menu on HyperOS, with custom items, reboot entries and blur.
+description: README.md
+license: MIT
+homepage: https://github.com/LuigiColantuono/Power11
+support: https://github.com/LuigiColantuono/Power11/issues
+icon: assets/icon.png
+tags: [hyperos, miui, power-menu, systemui, aosp, xposed]
+authors:
+  - name: Luigi Colantuono
+    url: https://github.com/LuigiColantuono
+compatibility:
+  androidMinApi: 31
