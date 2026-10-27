@@ -57,6 +57,10 @@ one platform) in `ANDROID_HOME`.
 python build.py --all
 ```
 
+## Preview
+<img width="460" height="auto" alt="image" src="https://github.com/user-attachments/assets/dc930c6e-8c0a-4f1c-ba4f-590e9e31a08a" />
+
+
 ## Notes
 
 - Lockdown only appears if it is enabled in the lock screen settings.
