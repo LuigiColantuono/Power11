@@ -67,3 +67,7 @@ python build.py --all
 ## Credits
 
 Made by **Luigi Colantuono**.
+
+## License
+
+[MIT](LICENSE)
